@@ -10,7 +10,8 @@ class App extends React.Component {
     manager: '',
     players: [],
     balance: '',
-    value: ''
+    value: '',
+    message: ''
   };
 
   async componentDidMount() {
@@ -25,10 +26,15 @@ class App extends React.Component {
     event.preventDefault();
 
     const accounts = await web3.eth.getAccounts();
+
+    this.setState({ message: 'waiting for transaction to be completed...' });
+
     await lottery.methods.send({
       from: accounts[0],
       value: web3.utils.toWei(this.state.value, 'ether')
     });
+
+    this.setState({ message: 'transaction completed...' });
   };
 
   render() {
@@ -55,6 +61,10 @@ class App extends React.Component {
           </div>
           <button>Enter</button>
         </form>
+
+        <hr />
+
+        <h2>{this.state.message}</h2>
       </div>
     );
   }
