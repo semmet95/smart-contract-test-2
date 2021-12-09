@@ -29,7 +29,7 @@ class App extends React.Component {
 
     this.setState({ message: 'waiting for transaction to be completed...' });
 
-    await lottery.methods.send({
+    await lottery.methods.enter().send({
       from: accounts[0],
       value: web3.utils.toWei(this.state.value, 'ether')
     });
